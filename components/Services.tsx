@@ -1,32 +1,31 @@
 "use client";
 
 import { Paintbrush, Code, Send, Layers } from "lucide-react";
+import { useTranslations } from "next-intl";
 
-const services = [
+const servicesConfig = [
   {
-    phase: "Phase 01",
-    title: "Design Layer",
+    key: "phase01",
     icon: Paintbrush,
-    desc: "A striking, custom digital design that commands attention. We shape an immersive visual identity that speaks to your target audience, establishing premium credibility and making a powerful first impression.",
-    features: ["Premium Visual Strategy", "Bespoke Digital Design", "Audience Engagement", "High-End Brand Authority"],
   },
   {
-    phase: "Phase 02",
-    title: "Development Layer",
+    key: "phase02",
     icon: Code,
-    desc: "Flawless engineering that drives results. We transform visual concepts into fast, fluid, and robust web applications designed to convert visitors into loyal clients, ensuring smooth performance on all devices.",
-    features: ["High-Performance Architecture", "Intuitive User Journeys", "Fluid Cross-Device Experience", "Conversion-Focused Code"],
   },
   {
-    phase: "Phase 03",
-    title: "Deployment Layer",
+    key: "phase03",
     icon: Send,
-    desc: "Seamless launching and search engine dominance. We optimize your platform for blistering loading speeds and ensure high search visibility, positioning your brand for immediate growth and long-term security.",
-    features: ["Blistering Page Speeds", "Search Engine Dominance", "Secure Edge Infrastructure", "Analytics & Growth Ready"],
   },
-];
+] as const;
 
 export default function Services() {
+  const t = useTranslations("services");
+
+  const title = t("title");
+  const words = title.split(" ");
+  const firstPart = words.slice(0, -1).join(" ");
+  const lastPart = words[words.length - 1];
+
   return (
     <section id="services" className="relative py-24 md:py-32 w-full bg-brand-black/95">
       {/* Background ambient red glow */}
@@ -39,22 +38,24 @@ export default function Services() {
             <div className="inline-flex items-center gap-2 px-3 py-1 border border-brand-red/20 bg-brand-red/5 rounded-full w-fit">
               <Layers className="w-3.5 h-3.5 text-brand-red" />
               <span className="text-[9px] font-bold uppercase tracking-widest text-brand-red">
-                Operational Framework
+                {t("tagline")}
               </span>
             </div>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-white select-none">
-              THE LAUNCH <span className="text-gradient-red">SYSTEM</span>
+            <h2 className="text-[clamp(1.6rem,5.2vw,3rem)] font-bold tracking-tight text-white select-none text-balance break-words leading-tight">
+              {firstPart} <span className="text-gradient-red">{lastPart}</span>
             </h2>
           </div>
-          <p className="max-w-md text-sm text-white/50 leading-relaxed font-light">
-            We operate through a highly unified construction process, building your digital presence layer by layer. From cinematic drafts to performant deployment.
+          <p className="max-w-md text-sm text-white/50 leading-relaxed font-light text-pretty break-words">
+            {t("description")}
           </p>
         </div>
 
         {/* Services Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {services.map((s, idx) => {
+          {servicesConfig.map((s, idx) => {
             const IconComponent = s.icon;
+            const features = t.raw(`phases.${s.key}.features`) as string[];
+
             return (
               <div
                 key={idx}
@@ -67,7 +68,7 @@ export default function Services() {
                   {/* Phase & Icon Row */}
                   <div className="flex items-center justify-between mb-8">
                     <span className="font-mono text-[9px] uppercase tracking-[0.25em] text-white/40 group-hover:text-brand-red/80 transition-colors">
-                      {s.phase}
+                      {t(`phases.${s.key}.label`)}
                     </span>
                     <div className="w-10 h-10 rounded-lg border border-white/5 bg-white/5 flex items-center justify-center transition-all duration-500 group-hover:border-brand-red/35 group-hover:bg-brand-red/5 group-hover:shadow-[0_0_15px_rgba(251,54,64,0.15)]">
                       <IconComponent className="w-4 h-4 text-white/70 group-hover:text-brand-red transition-colors" />
@@ -75,21 +76,24 @@ export default function Services() {
                   </div>
 
                   {/* Title & Description */}
-                  <h3 className="text-lg font-bold text-white tracking-tight mb-4 group-hover:text-brand-red transition-colors">
-                    {s.title}
+                  <h3 className="text-lg sm:text-xl font-bold text-white tracking-tight mb-4 group-hover:text-brand-red transition-colors text-balance break-words leading-snug">
+                    {t(`phases.${s.key}.title`)}
                   </h3>
-                  <p className="text-[12px] sm:text-sm text-white/50 leading-relaxed font-light mb-8">
-                    {s.desc}
+                  <p className="text-[12px] sm:text-sm text-white/50 leading-relaxed font-light mb-8 text-pretty break-words">
+                    {t(`phases.${s.key}.desc`)}
                   </p>
                 </div>
 
                 {/* Features List */}
                 <div className="border-t border-white/5 pt-6 mt-auto">
-                  <ul className="flex flex-col gap-2">
-                    {s.features.map((feat, fIdx) => (
-                      <li key={fIdx} className="flex items-center gap-2.5 text-[11px] font-medium tracking-wide text-white/60">
-                        <span className="w-1.5 h-1.5 rounded-full bg-brand-red/60 group-hover:bg-brand-red transition-all"></span>
-                        {feat}
+                  <ul className="flex flex-col gap-3">
+                    {features.map((feat, fIdx) => (
+                      <li
+                        key={fIdx}
+                        className="flex items-start gap-2.5 text-[11px] font-medium tracking-wide text-white/60 leading-normal"
+                      >
+                        <span className="w-1.5 h-1.5 rounded-full bg-brand-red/60 group-hover:bg-brand-red transition-all mt-1.5 shrink-0"></span>
+                        <span className="break-words">{feat}</span>
                       </li>
                     ))}
                   </ul>

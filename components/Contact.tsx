@@ -2,8 +2,11 @@
 
 import { useState, useRef, useEffect } from "react";
 import { Mail, Phone, MapPin, Send, Rocket, CheckCircle2, ShieldAlert } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 export default function Contact() {
+  const t = useTranslations("contact");
+
   const [form, setForm] = useState({ name: "", email: "", message: "", agree: false });
   const [sliderUnlocked, setSliderUnlocked] = useState(false);
   const [sliderVal, setSliderVal] = useState(0);
@@ -16,26 +19,31 @@ export default function Contact() {
   const handleRef = useRef<HTMLDivElement>(null);
   const isDragging = useRef(false);
 
+  const title = t("title");
+  const words = title.split(" ");
+  const firstPart = words.slice(0, -1).join(" ");
+  const lastPart = words[words.length - 1];
+
   // Custom Slider Spam Shield Mouse/Touch event handlers
   useEffect(() => {
     const handleMove = (clientX: number) => {
       if (!isDragging.current || !sliderRef.current || !handleRef.current) return;
-      
+
       const slider = sliderRef.current;
       const rect = slider.getBoundingClientRect();
       const sliderWidth = rect.width;
       const handleWidth = handleRef.current.offsetWidth;
-      
+
       // Calculate offset inside the slider container
-      let offsetX = clientX - rect.left - (handleWidth / 2);
+      let offsetX = clientX - rect.left - handleWidth / 2;
       const maxOffset = sliderWidth - handleWidth - 6; // padding offsets
-      
+
       if (offsetX < 0) offsetX = 0;
       if (offsetX > maxOffset) offsetX = maxOffset;
-      
+
       const percentage = Math.round((offsetX / maxOffset) * 100);
       setSliderVal(percentage);
-      
+
       // Snap to unlock at 95%
       if (percentage >= 96) {
         setSliderUnlocked(true);
@@ -72,19 +80,25 @@ export default function Contact() {
 
   const startDrag = () => {
     if (sliderUnlocked) return;
-    
+
     // Lock captcha until all text fields are filled out and checkbox is ticked
-    const isFormValid = form.name.trim() !== "" && form.email.trim() !== "" && form.message.trim() !== "" && form.agree;
+    const isFormValid =
+      form.name.trim() !== "" &&
+      form.email.trim() !== "" &&
+      form.message.trim() !== "" &&
+      form.agree;
     if (!isFormValid) {
-      setErrorMsg("Please complete all form fields and agree to the privacy protocol before launching.");
+      setErrorMsg(t("errors.incompleteForm"));
       return;
     }
-    
+
     isDragging.current = true;
     setErrorMsg("");
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value, type } = e.target;
     if (type === "checkbox") {
       const checked = (e.target as HTMLInputElement).checked;
@@ -99,15 +113,15 @@ export default function Contact() {
     setErrorMsg("");
 
     if (!form.name || !form.email || !form.message) {
-      setErrorMsg("Please fill out all transmission fields.");
+      setErrorMsg(t("errors.fillAll"));
       return;
     }
     if (!form.agree) {
-      setErrorMsg("Please agree to the privacy protocol.");
+      setErrorMsg(t("errors.agreePrivacy"));
       return;
     }
     if (!sliderUnlocked) {
-      setErrorMsg("Please slide the rocket captcha to verify your transmission.");
+      setErrorMsg(t("errors.slideCaptcha"));
       return;
     }
 
@@ -129,23 +143,22 @@ export default function Contact() {
       <div className="absolute right-[-10%] bottom-0 w-[50vw] h-[50vw] rounded-full ambient-glow-red -z-10 opacity-15"></div>
 
       <div className="mx-auto max-w-7xl px-6 md:px-12 w-full grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
-        
         {/* Left Column: Direct Pitch & Corporate Info */}
         <div className="lg:col-span-5 flex flex-col gap-8">
           <div className="flex flex-col gap-4">
             <div className="inline-flex items-center gap-2 px-3 py-1 border border-brand-red/20 bg-brand-red/5 rounded-full w-fit">
               <Send className="w-3.5 h-3.5 text-brand-red" />
               <span className="text-[9px] font-bold uppercase tracking-widest text-brand-red">
-                SECURE TRANSMISSION NODE
+                {t("tagline")}
               </span>
             </div>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-white select-none">
-              INITIALIZE <span className="text-gradient-red">LAUNCH</span>
+            <h2 className="text-[clamp(1.6rem,5.2vw,3rem)] font-bold tracking-tight text-white select-none text-balance break-words leading-tight">
+              {firstPart} <span className="text-gradient-red">{lastPart}</span>
             </h2>
           </div>
 
-          <p className="text-sm text-white/50 leading-relaxed font-light">
-            Ready to deploy your digital architecture? Construct your project guidelines, transmit your system values, and our engineering unit will formulate a luxury framework within 24 hours.
+          <p className="text-sm text-white/50 leading-relaxed font-light text-pretty break-words">
+            {t("description")}
           </p>
 
           {/* Corporate Details */}
@@ -154,9 +167,14 @@ export default function Contact() {
               <div className="w-10 h-10 border border-white/5 bg-white/5 rounded-lg flex items-center justify-center text-brand-red">
                 <Mail className="w-4 h-4" />
               </div>
-              <div>
-                <h4 className="font-mono text-[9px] uppercase tracking-wider text-white/40">Secure Email</h4>
-                <a href="mailto:construct@launchlayer.agency" className="text-[13px] font-medium text-white hover:text-brand-red transition-colors">
+              <div className="min-w-0">
+                <h4 className="font-mono text-[9px] uppercase tracking-wider text-white/40">
+                  {t("labels.email")}
+                </h4>
+                <a
+                  href="mailto:construct@launchlayer.agency"
+                  className="text-[13px] font-medium text-white hover:text-brand-red transition-colors break-words"
+                >
                   construct@launchlayer.agency
                 </a>
               </div>
@@ -166,9 +184,14 @@ export default function Contact() {
               <div className="w-10 h-10 border border-white/5 bg-white/5 rounded-lg flex items-center justify-center text-brand-red">
                 <Phone className="w-4 h-4" />
               </div>
-              <div>
-                <h4 className="font-mono text-[9px] uppercase tracking-wider text-white/40">Direct Hotlink</h4>
-                <a href="tel:+18885055297" className="text-[13px] font-medium text-white hover:text-brand-red transition-colors">
+              <div className="min-w-0">
+                <h4 className="font-mono text-[9px] uppercase tracking-wider text-white/40">
+                  {t("labels.phone")}
+                </h4>
+                <a
+                  href="tel:+18885055297"
+                  className="text-[13px] font-medium text-white hover:text-brand-red transition-colors break-words"
+                >
                   +1 (888) 505-LAYR
                 </a>
               </div>
@@ -178,10 +201,12 @@ export default function Contact() {
               <div className="w-10 h-10 border border-white/5 bg-white/5 rounded-lg flex items-center justify-center text-brand-red">
                 <MapPin className="w-4 h-4" />
               </div>
-              <div>
-                <h4 className="font-mono text-[9px] uppercase tracking-wider text-white/40">Headquarters</h4>
-                <span className="text-[13px] font-medium text-white">
-                  Orbiting Earth, System Node 01
+              <div className="min-w-0">
+                <h4 className="font-mono text-[9px] uppercase tracking-wider text-white/40">
+                  {t("labels.headquarters")}
+                </h4>
+                <span className="text-[13px] font-medium text-white break-words">
+                  {t("labels.hqValue")}
                 </span>
               </div>
             </div>
@@ -189,11 +214,17 @@ export default function Contact() {
             {/* Corporate verification & direct phone trust block */}
             <div className="mt-6 pt-6 border-t border-white/5 flex flex-col gap-2.5">
               <span className="font-mono text-[9px] uppercase tracking-wider text-brand-red font-bold">
-                Operational Authentication
+                {t("labels.authTitle")}
               </span>
               <p className="text-[12px] text-white/50 leading-relaxed font-light">
-                Launch Layer Ltd. is an established, registered digital engineering collective. Full operations are active Monday &mdash; Friday, 09:00 &mdash; 18:00 EST. 
-                Direct secure voice authorization line: <a href="tel:+18885055297" className="text-brand-red hover:underline font-medium">+1 (888) 505-5297</a>.
+                {t("labels.authDesc")}{" "}
+                <a
+                  href="tel:+18885055297"
+                  className="text-brand-red hover:underline font-medium"
+                >
+                  +1 (888) 505-5297
+                </a>
+                .
               </p>
             </div>
           </div>
@@ -202,7 +233,6 @@ export default function Contact() {
         {/* Right Column: Encrypted Form Container */}
         <div className="lg:col-span-7 w-full">
           <div className="relative rounded-2xl glass-panel p-8 md:p-10 border border-white/5 bg-brand-black/45 glass-card-glow min-h-[460px] flex flex-col justify-center overflow-hidden">
-            
             {/* Form Success Panel */}
             {submitted ? (
               <div className="flex flex-col items-center justify-center text-center gap-6 py-10 animate-fade-in">
@@ -211,13 +241,13 @@ export default function Contact() {
                 </div>
                 <div className="flex flex-col gap-2">
                   <h3 className="text-xl font-bold tracking-wider text-white uppercase">
-                    TRANSMISSION COMPLETE
+                    {t("labels.successTitle")}
                   </h3>
                   <p className="max-w-md text-xs sm:text-sm text-white/50 leading-relaxed font-light">
-                    Project Launch Request Initialized! Our core engineering unit has secured your data layers. We will link up with you shortly.
+                    {t("labels.successDesc")}
                   </p>
                 </div>
-                
+
                 {/* Reset button to resubmit if needed */}
                 <button
                   onClick={() => {
@@ -227,7 +257,7 @@ export default function Contact() {
                   }}
                   className="mt-4 px-6 py-2.5 border border-white/10 hover:border-brand-red rounded-full text-[10px] font-bold uppercase tracking-widest text-white/60 hover:text-white transition-colors"
                 >
-                  New Submission
+                  {t("labels.newSubmission")}
                 </button>
               </div>
             ) : isSubmitting ? (
@@ -239,23 +269,25 @@ export default function Contact() {
                 </div>
                 <div className="flex flex-col gap-1.5">
                   <h3 className="text-xs font-bold tracking-[0.25em] text-brand-red uppercase animate-pulse">
-                    ENCRYPTING INQUIRY
+                    {t("labels.encryptingTitle")}
                   </h3>
                   <p className="font-mono text-[9px] text-white/30 tracking-widest uppercase">
-                    Securing transmission payload layers...
+                    {t("labels.encryptingDesc")}
                   </p>
                 </div>
               </div>
             ) : (
               /* Core Form */
               <form onSubmit={handleSubmit} className="flex flex-col gap-6">
-                
                 {/* Fields Row */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   {/* Name field */}
                   <div className="flex flex-col gap-1.5">
-                    <label htmlFor="name" className="font-mono text-[8px] uppercase tracking-widest text-white/40">
-                      Operator Name
+                    <label
+                      htmlFor="name"
+                      className="font-mono text-[8px] uppercase tracking-widest text-white/40"
+                    >
+                      {t("labels.operatorName")}
                     </label>
                     <input
                       type="text"
@@ -263,7 +295,7 @@ export default function Contact() {
                       name="name"
                       value={form.name}
                       onChange={handleInputChange}
-                      placeholder="e.g. Alexis Carter"
+                      placeholder={t("labels.placeholderName")}
                       className="w-full bg-[#000F08] border border-white/5 rounded-lg px-4 py-3 text-xs text-white placeholder-white/20 focus:border-brand-red/50 focus:outline-none transition-colors"
                       required
                       suppressHydrationWarning
@@ -272,8 +304,11 @@ export default function Contact() {
 
                   {/* Email field */}
                   <div className="flex flex-col gap-1.5">
-                    <label htmlFor="email" className="font-mono text-[8px] uppercase tracking-widest text-white/40">
-                      Transmission Email
+                    <label
+                      htmlFor="email"
+                      className="font-mono text-[8px] uppercase tracking-widest text-white/40"
+                    >
+                      {t("labels.transmissionEmail")}
                     </label>
                     <input
                       type="email"
@@ -281,7 +316,7 @@ export default function Contact() {
                       name="email"
                       value={form.email}
                       onChange={handleInputChange}
-                      placeholder="e.g. alexis@company.com"
+                      placeholder={t("labels.placeholderEmail")}
                       className="w-full bg-[#000F08] border border-white/5 rounded-lg px-4 py-3 text-xs text-white placeholder-white/20 focus:border-brand-red/50 focus:outline-none transition-colors"
                       required
                       suppressHydrationWarning
@@ -291,8 +326,11 @@ export default function Contact() {
 
                 {/* Message field */}
                 <div className="flex flex-col gap-1.5">
-                  <label htmlFor="message" className="font-mono text-[8px] uppercase tracking-widest text-white/40">
-                    Project Architecture Spec
+                  <label
+                    htmlFor="message"
+                    className="font-mono text-[8px] uppercase tracking-widest text-white/40"
+                  >
+                    {t("labels.projectArchitecture")}
                   </label>
                   <textarea
                     id="message"
@@ -300,7 +338,7 @@ export default function Contact() {
                     rows={4}
                     value={form.message}
                     onChange={handleInputChange}
-                    placeholder="Describe your design, development, and launch parameters..."
+                    placeholder={t("labels.placeholderMessage")}
                     className="w-full bg-[#000F08] border border-white/5 rounded-lg px-4 py-3 text-xs text-white placeholder-white/20 focus:border-brand-red/50 focus:outline-none transition-colors resize-none"
                     required
                   />
@@ -317,16 +355,14 @@ export default function Contact() {
                 {/* Captcha Slider Spam Shield */}
                 <div className="flex flex-col gap-2">
                   <span className="font-mono text-[8px] uppercase tracking-widest text-white/40">
-                    Transmission Captcha Shield
+                    {t("labels.captchaTitle")}
                   </span>
-                  
+
                   {/* Slider Slot */}
                   <div
                     ref={sliderRef}
                     className={`relative w-full h-11 border rounded-lg bg-[#000F08] flex items-center px-1 overflow-hidden select-none transition-colors ${
-                      sliderUnlocked
-                        ? "border-brand-red/40 bg-brand-red/5"
-                        : "border-white/5"
+                      sliderUnlocked ? "border-brand-red/40 bg-brand-red/5" : "border-white/5"
                     }`}
                   >
                     {/* Background slide bar fill */}
@@ -346,18 +382,35 @@ export default function Contact() {
                           : "border-white/10 bg-white/5 text-white/70 hover:border-white/20"
                       } ${rocketLaunched ? "animate-rocket-launch" : "transition-all duration-75"}`}
                       style={{
-                        left: sliderUnlocked ? "auto" : `calc(${sliderVal}% - ${(sliderVal / 100) * 36}px)`,
+                        left: sliderUnlocked
+                          ? "auto"
+                          : `calc(${sliderVal}% - ${(sliderVal / 100) * 36}px)`,
                         right: sliderUnlocked ? "6px" : "auto",
                       }}
                     >
                       <Rocket className={`w-4.5 h-4.5 ${sliderUnlocked ? "animate-pulse" : ""}`} />
                       {rocketLaunched && (
                         <>
-                          <div className="smoke-particle" style={{ "--smoke-drift-x": "-40px", animationDelay: "0.1s" } as any}></div>
-                          <div className="smoke-particle" style={{ "--smoke-drift-x": "-60px", animationDelay: "0.2s" } as any}></div>
-                          <div className="smoke-particle" style={{ "--smoke-drift-x": "-20px", animationDelay: "0.3s" } as any}></div>
-                          <div className="smoke-particle" style={{ "--smoke-drift-x": "-50px", animationDelay: "0.4s" } as any}></div>
-                          <div className="smoke-particle" style={{ "--smoke-drift-x": "-30px", animationDelay: "0.5s" } as any}></div>
+                          <div
+                            className="smoke-particle"
+                            style={{ "--smoke-drift-x": "-40px", animationDelay: "0.1s" } as any}
+                          ></div>
+                          <div
+                            className="smoke-particle"
+                            style={{ "--smoke-drift-x": "-60px", animationDelay: "0.2s" } as any}
+                          ></div>
+                          <div
+                            className="smoke-particle"
+                            style={{ "--smoke-drift-x": "-20px", animationDelay: "0.3s" } as any}
+                          ></div>
+                          <div
+                            className="smoke-particle"
+                            style={{ "--smoke-drift-x": "-50px", animationDelay: "0.4s" } as any}
+                          ></div>
+                          <div
+                            className="smoke-particle"
+                            style={{ "--smoke-drift-x": "-30px", animationDelay: "0.5s" } as any}
+                          ></div>
                         </>
                       )}
                     </div>
@@ -368,7 +421,7 @@ export default function Contact() {
                         sliderVal > 30 ? "opacity-0" : "opacity-100 text-white/30"
                       }`}
                     >
-                      {sliderUnlocked ? "Systems Ready" : "Slide Rocket to Launch"}
+                      {sliderUnlocked ? t("labels.captchaUnlocked") : t("labels.captchaIdle")}
                     </span>
                   </div>
                 </div>
@@ -383,8 +436,11 @@ export default function Contact() {
                     onChange={handleInputChange}
                     className="w-3.5 h-3.5 rounded border border-white/15 bg-black/40 mt-0.5 accent-brand-red focus:ring-0 cursor-pointer"
                   />
-                  <label htmlFor="agree" className="text-[11px] text-white/40 leading-relaxed font-light">
-                    I agree to the secure privacy guidelines and technical transmission protocols.
+                  <label
+                    htmlFor="agree"
+                    className="text-[11px] text-white/40 leading-relaxed font-light text-pretty break-words"
+                  >
+                    {t("labels.privacyAgreement")}
                   </label>
                 </div>
 
@@ -400,14 +456,12 @@ export default function Contact() {
                   suppressHydrationWarning
                 >
                   <Send className="w-3.5 h-3.5" />
-                  <span>Transmit Spec</span>
+                  <span>{t("labels.btnTransmit")}</span>
                 </button>
-
               </form>
             )}
           </div>
         </div>
-
       </div>
     </section>
   );

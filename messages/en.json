@@ -1,0 +1,219 @@
+{
+  "metadata": {
+    "title": "Launch Layer | Immersive Digital Agency & Web Engineering",
+    "description": "A futuristic digital agency engineering cinematic web experiences, modern branding, and state-of-the-art software systems. Launch your digital presence layer by layer.",
+    "keywords": "Web Agency, Creative Web Design, Cinematic Web Experiences, Next.js, Three.js Agency, Launch Layer, Digital Engineering, Premium Software Design",
+    "ogTitle": "Launch Layer | Immersive Digital Agency & Web Engineering",
+    "ogDescription": "Launch your business into the online world through futuristic construction and premium visual storytelling.",
+    "twitterTitle": "Launch Layer | Immersive Digital Agency & Web Engineering",
+    "twitterDescription": "Launch your business into the online world through futuristic construction and premium visual storytelling."
+  },
+  "navbar": {
+    "home": "Home",
+    "services": "Services",
+    "work": "Work",
+    "contact": "Contact",
+    "cta": "Start Launch",
+    "mobileCta": "Initialize Project"
+  },
+  "hero": {
+    "tagline": "Launch Layer Creative",
+    "titleLine1": "LAUNCH YOUR",
+    "titleLine2": "BRAND INTO THE",
+    "titleLine3": "DIGITAL WORLD.",
+    "description": "We design and build bespoke digital experiences, high-performance websites, and cohesive digital systems. No templates. No generic layouts. Just elegant engineering custom-tailored to establish your online presence and launch your brand.",
+    "btnBuild": "Build Your Website",
+    "btnExplore": "Explore Portfolio",
+    "interactiveSpecs": "Interactive Specs",
+    "systemOperational": "System Operational",
+    "exploreSystem": "Explore System"
+  },
+  "services": {
+    "tagline": "Operational Framework",
+    "title": "THE LAUNCH SYSTEM",
+    "description": "We operate through a highly unified construction process, building your digital presence layer by layer. From cinematic drafts to performant deployment.",
+    "phases": {
+      "phase01": {
+        "label": "Phase 01",
+        "title": "Design Layer",
+        "desc": "A striking, custom digital design that commands attention. We shape an immersive visual identity that speaks to your target audience, establishing premium credibility and making a powerful first impression.",
+        "features": ["Premium Visual Strategy", "Bespoke Digital Design", "Audience Engagement", "High-End Brand Authority"]
+      },
+      "phase02": {
+        "label": "Phase 02",
+        "title": "Development Layer",
+        "desc": "Flawless engineering that drives results. We transform visual concepts into fast, fluid, and robust web applications designed to convert visitors into loyal clients, ensuring smooth performance on all devices.",
+        "features": ["High-Performance Architecture", "Intuitive User Journeys", "Fluid Cross-Device Experience", "Conversion-Focused Code"]
+      },
+      "phase03": {
+        "label": "Phase 03",
+        "title": "Deployment Layer",
+        "desc": "Seamless launching and search engine dominance. We optimize your platform for blistering loading speeds and ensure high search visibility, positioning your brand for immediate growth and long-term security.",
+        "features": ["Blistering Page Speeds", "Search Engine Dominance", "Secure Edge Infrastructure", "Analytics & Growth Ready"]
+      }
+    }
+  },
+  "showcase": {
+    "tagline": "Selected Works & Case Studies",
+    "title": "SELECTED ARCHIVES",
+    "description": "Explore our curated work. Hover over each architectural block to reveal operational summaries, engineering configurations, and client outcomes.",
+    "reveal": "Reveal parameters",
+    "exploreArchitecture": "Explore Launch Architecture",
+    "projects": {
+      "aether": {
+        "title": "AETHER / CO",
+        "category": "Luxury Fashion-Tech E-Commerce",
+        "stat": "E-Commerce",
+        "badge": "3D Interactive",
+        "desc": "A bespoke digital showroom featuring interactive 3D product renders, dynamic lighting environments, and millisecond edge loading architectures.",
+        "review": {
+          "author": "Elena Rostova",
+          "role": "Director of Product, Aether",
+          "quote": "Launch Layer designed an incredible 3D showroom that increased user session durations by 42% on week one."
+        }
+      },
+      "krypton": {
+        "title": "KRYPTON AUTOMOTIVE",
+        "category": "Futuristic EV Dashboard",
+        "stat": "WebGL Dashboard",
+        "badge": "SaaS Systems",
+        "desc": "A luxury data console displaying active server logs, hardware temperatures, and dynamic transaction nodes utilizing custom WebGL charts.",
+        "review": {
+          "author": "Dr. Kenji Tanaka",
+          "role": "Lead Systems Architect, Krypton Labs",
+          "quote": "Highly performant Next.js engineering. To render WebGL charts smoothly alongside complex sequences is a masterclass."
+        }
+      },
+      "veridian": {
+        "title": "VERIDIAN HOMES",
+        "category": "Premium Property Showcase",
+        "stat": "Cinematic Scroll",
+        "badge": "Storytelling",
+        "desc": "A story-driven digital experience designed for green-energy technology enterprises, built with customized horizontal scrubbing paths.",
+        "review": {
+          "author": "Marcus Sterling",
+          "role": "CMO, Veridian Energy",
+          "quote": "The component assembly sequence is an engineering masterpiece. Users love the Apple-grade scrolling inertia."
+        }
+      },
+      "spectra": {
+        "title": "SPECTRA LABS",
+        "category": "Industrial Design Platform",
+        "stat": "Hardware 3D",
+        "badge": "Spline Renders",
+        "desc": "A modern design portfolio showing custom mechanical blueprints and robotics assets integrated with expandable Spline animations.",
+        "review": {
+          "author": "Sarah Jenkins",
+          "role": "Lead Designer, Spectra Core",
+          "quote": "Absolute professional polish. They seamlessly wove heavy WebGL models into a breathable, ultra-fast layout."
+        }
+      }
+    }
+  },
+  "scrollSequence": {
+    "buffering": "Buffering Assembly Sequence",
+    "systemLogger": "Assembly Node: Operational // FPS_60 // Payloads_OK",
+    "milestones": {
+      "01": {
+        "text": "01 / ASSEMBLY",
+        "desc": "Precision-engineered from the foundation. Where raw mathematical logic meets absolute visual perfection."
+      },
+      "02": {
+        "text": "02 / IDENTITY",
+        "desc": "Form follows intent. A striking digital presence shaped to tell your brand’s true story."
+      },
+      "03": {
+        "text": "03 / MOTION",
+        "desc": "Visceral speed and fluid grace, making every touchpoint feel alive and effortless."
+      },
+      "04": {
+        "text": "04 / ASCENT",
+        "desc": "The elements align. Seamlessly deployed to launch your business into the absolute future."
+      }
+    }
+  },
+  "contact": {
+    "tagline": "SECURE TRANSMISSION NODE",
+    "title": "INITIALIZE LAUNCH",
+    "description": "Ready to deploy your digital architecture? Construct your project guidelines, transmit your system values, and our engineering unit will formulate a luxury framework within 24 hours.",
+    "labels": {
+      "email": "Secure Email",
+      "phone": "Direct Hotlink",
+      "headquarters": "Headquarters",
+      "hqValue": "Orbiting Earth, System Node 01",
+      "authTitle": "Operational Authentication",
+      "authDesc": "Launch Layer Ltd. is an established, registered digital engineering collective. Full operations are active Monday — Friday, 09:00 — 18:00 EST. Direct secure voice authorization line:",
+      "operatorName": "Operator Name",
+      "transmissionEmail": "Transmission Email",
+      "projectArchitecture": "Project Architecture Spec",
+      "captchaTitle": "Transmission Captcha Shield",
+      "captchaIdle": "Slide Rocket to Launch",
+      "captchaUnlocked": "Systems Ready",
+      "privacyAgreement": "I agree to the secure privacy guidelines and technical transmission protocols.",
+      "btnTransmit": "Transmit Spec",
+      "newSubmission": "New Submission",
+      "successTitle": "TRANSMISSION COMPLETE",
+      "successDesc": "Project Launch Request Initialized! Our core engineering unit has secured your data layers. We will link up with you shortly.",
+      "encryptingTitle": "ENCRYPTING INQUIRY",
+      "encryptingDesc": "Securing transmission payload layers...",
+      "placeholderName": "e.g. Alexis Carter",
+      "placeholderEmail": "e.g. alexis@company.com",
+      "placeholderMessage": "Describe your design, development, and launch parameters..."
+    },
+    "errors": {
+      "incompleteForm": "Please complete all form fields and agree to the privacy protocol before launching.",
+      "fillAll": "Please fill out all transmission fields.",
+      "agreePrivacy": "Please agree to the privacy protocol.",
+      "slideCaptcha": "Please slide the rocket captcha to verify your transmission."
+    }
+  },
+  "footer": {
+    "description": "Launch Layer constructs immersive digital portals, premium 3D structures, and Apple-grade systems layer by layer.",
+    "nodesTitle": "Navigation Nodes",
+    "channelsTitle": "Social Channels",
+    "copyright": "LaunchLayer. All Rights Reserved.",
+    "privacyPolicy": "Privacy Policy",
+    "termsConditions": "Terms & Conditions",
+    "copyrightNotice": "All website content, branding, UI, graphics, designs and materials belong to LaunchLayer unless otherwise stated. Unauthorized copying, redistribution or commercial use is prohibited."
+  },
+  "privacy": {
+    "returnBtn": "Return to Headquarters",
+    "title": "PRIVACY PROTOCOL",
+    "effectiveDate": "EFFECTIVE_DATE: May 2026 // NODE_ENCRYPTION_SECURE",
+    "footerLabel": "Launch Layer Secure Node System // ALL_RIGHTS_RESERVED",
+    "sections": {
+      "01": {
+        "title": "01 // Data Transmission Encrypted",
+        "content": "All specifications, project metrics, and client values sent through our Secure Transmission Node are automatically encrypted locally via TLS protocols before being processed inside our server database blocks."
+      },
+      "02": {
+        "title": "02 // Information Architecture Collections",
+        "content": "We only gather parameters explicitly transferred by your operators (e.g. operator names, emails, project descriptions) to formulate direct custom project proposals. We do not engage in third-party cookie trading or sell parameters."
+      },
+      "03": {
+        "title": "03 // Systems Security Metrics",
+        "content": "Our core digital systems implement constant firewall scans, sandboxed processes, and rigid permission models to safeguard client directories and source code repositories from external malicious scans."
+      }
+    }
+  },
+  "terms": {
+    "returnBtn": "Return to Headquarters",
+    "title": "SYSTEM PROTOCOLS",
+    "complianceCode": "COMPLIANCE_CODE: SYSTEM_AGREEMENT_NODE // MAY_2026",
+    "footerLabel": "Launch Layer Secure Node System // ALL_RIGHTS_RESERVED",
+    "sections": {
+      "01": {
+        "title": "01 // Architectural Scope",
+        "content": "All project scopes, engineering iterations, particle counts, and rendering budgets are mutually agreed upon inside separate electronic project statements of work before core system compilation commences."
+      },
+      "02": {
+        "title": "02 // Intellectual Properties & Code Ownership",
+        "content": "Upon complete funding settlements, all compilation files, custom WebGL assets, component blocks, and responsive deployment directories are fully transferred to the client, under strict perpetual global licenses."
+      },
+      "03": {
+        "title": "03 // Systems Stability Limitation",
+        "content": "While we deliver completely bulletproof, 60fps cinematic products, we are not responsible for client-side API outages, edge CDN regional server hardware errors, or code configurations altered by external third-party developers."
+      }
+    }
+  }
+}

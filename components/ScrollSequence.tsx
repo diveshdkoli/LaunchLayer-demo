@@ -3,38 +3,41 @@
 import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useTranslations } from "next-intl";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const framesCount = 96;
-const textMilestones = [
-  {
-    text: "01 / ASSEMBLY",
-    desc: "Precision-engineered from the foundation. Where raw mathematical logic meets absolute visual perfection.",
-    start: 0.12,
-    end: 0.28,
-  },
-  {
-    text: "02 / IDENTITY",
-    desc: "Form follows intent. A striking digital presence shaped to tell your brand’s true story.",
-    start: 0.36,
-    end: 0.52,
-  },
-  {
-    text: "03 / MOTION",
-    desc: "Visceral speed and fluid grace, making every touchpoint feel alive and effortless.",
-    start: 0.60,
-    end: 0.76,
-  },
-  {
-    text: "04 / ASCENT",
-    desc: "The elements align. Seamlessly deployed to launch your business into the absolute future.",
-    start: 0.82,
-    end: 0.96,
-  },
-];
+
+const milestoneRanges = [
+  { start: 0.12, end: 0.28 },
+  { start: 0.36, end: 0.52 },
+  { start: 0.60, end: 0.76 },
+  { start: 0.82, end: 0.96 },
+] as const;
 
 export default function ScrollSequence() {
+  const t = useTranslations("scrollSequence");
+
+  const textMilestones = [
+    {
+      text: t("milestones.01.text"),
+      desc: t("milestones.01.desc"),
+    },
+    {
+      text: t("milestones.02.text"),
+      desc: t("milestones.02.desc"),
+    },
+    {
+      text: t("milestones.03.text"),
+      desc: t("milestones.03.desc"),
+    },
+    {
+      text: t("milestones.04.text"),
+      desc: t("milestones.04.desc"),
+    },
+  ];
+
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const triggerRef = useRef<HTMLDivElement>(null);
@@ -73,13 +76,14 @@ export default function ScrollSequence() {
 
   // GSAP scroll trigger scrubbing
   useEffect(() => {
-    if (images.length === 0 || !canvasRef.current || !containerRef.current || !triggerRef.current) return;
+    if (images.length === 0 || !canvasRef.current || !containerRef.current || !triggerRef.current)
+      return;
 
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    // GSAP ScrollTrigger setup object (instantiated early to be available in resizeCanvas closure)
+    // GSAP ScrollTrigger setup object
     const scrollObj = { frame: 0 };
 
     // Set canvas sizes
@@ -126,7 +130,7 @@ export default function ScrollSequence() {
     // Initial resize call
     window.addEventListener("resize", resizeCanvas);
     resizeCanvas();
-    
+
     // Scrub counter timeline with EXPLICIT GSAP PINNING to center the frame assembly
     const anim = gsap.to(scrollObj, {
       frame: framesCount - 1,
@@ -141,13 +145,13 @@ export default function ScrollSequence() {
         anticipatePin: 1, // Buffers layout jumps on pinning entry
         onUpdate: (self) => {
           drawFrame(scrollObj.frame);
-          
+
           // Track scroll progress to animate overlay text indices
           const progress = self.progress;
           let activeIdx = null;
 
-          for (let i = 0; i < textMilestones.length; i++) {
-            const m = textMilestones[i];
+          for (let i = 0; i < milestoneRanges.length; i++) {
+            const m = milestoneRanges[i];
             if (progress >= m.start && progress <= m.end) {
               activeIdx = i;
               break;
@@ -166,28 +170,35 @@ export default function ScrollSequence() {
   }, [images]);
 
   return (
-    <section ref={triggerRef} className="relative w-full h-screen bg-brand-black overflow-hidden select-none">
-      
+    <section
+      ref={triggerRef}
+      className="relative w-full h-screen bg-brand-black overflow-hidden select-none"
+    >
       {/* Viewport Frame Container */}
-      <div ref={containerRef} className="relative w-full h-full overflow-hidden flex items-center justify-center">
+      <div
+        ref={containerRef}
+        className="relative w-full h-full overflow-hidden flex items-center justify-center"
+      >
         {loading ? (
           <div className="absolute inset-0 bg-brand-black flex flex-col items-center justify-center z-30">
             <div className="relative w-36 h-36 flex items-center justify-center">
               {/* Spinning luxury loader rings */}
               <div className="absolute inset-0 border border-white/5 rounded-full"></div>
               <div className="absolute inset-0 border-t-2 border-brand-red rounded-full animate-spin [animation-duration:1.2s]"></div>
-              <span className="text-sm font-semibold tracking-widest text-white">{loadPercent}%</span>
+              <span className="text-sm font-semibold tracking-widest text-white">
+                {loadPercent}%
+              </span>
             </div>
-            
+
             <p className="mt-8 text-xs font-bold uppercase tracking-[0.25em] text-brand-red animate-pulse">
-              Buffering Assembly Sequence
+              {t("buffering")}
             </p>
           </div>
         ) : (
           <>
             {/* Canvas Player */}
             <canvas ref={canvasRef} className="w-full h-full block bg-black sequence-canvas-active" />
-            
+
             {/* Atmospheric Red Glowing Overlays representing Imperial Night theme */}
             <div className="absolute inset-0 bg-gradient-to-r from-brand-black/95 via-transparent to-brand-black/90 pointer-events-none"></div>
             <div className="absolute inset-0 bg-gradient-to-b from-brand-black/40 via-transparent to-brand-black/90 pointer-events-none"></div>
@@ -221,7 +232,7 @@ export default function ScrollSequence() {
 
             {/* Top-Right Cinematic Assembly Logger */}
             <div className="absolute top-12 right-6 sm:right-12 pointer-events-none font-mono text-[8px] uppercase tracking-[0.25em] text-white/10 hidden md:block">
-              Assembly Node: Operational // FPS_60 // Payloads_OK
+              {t("systemLogger")}
             </div>
           </>
         )}

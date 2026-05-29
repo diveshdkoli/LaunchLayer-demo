@@ -2,15 +2,24 @@
 
 import { useState, useEffect } from "react";
 import { Menu, X, ArrowUpRight } from "lucide-react";
+import { useTranslations } from "next-intl";
+import LanguageSwitcher from "./LanguageSwitcher";
 
-const navLinks = [
-  { name: "Home", href: "#home" },
-  { name: "Services", href: "#services" },
-  { name: "Work", href: "#work" },
-  { name: "Contact", href: "#contact" },
-];
+const navConfig = [
+  { key: "home", href: "#home" },
+  { key: "services", href: "#services" },
+  { key: "work", href: "#work" },
+  { key: "contact", href: "#contact" },
+] as const;
 
 export default function Navbar() {
+  const t = useTranslations("navbar");
+
+  const navLinks = navConfig.map((link) => ({
+    name: t(link.key),
+    href: link.href,
+  }));
+
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -25,7 +34,7 @@ export default function Navbar() {
       }
 
       // Track active section for indicator
-      const sections = navLinks.map(link => link.href.substring(1));
+      const sections = navConfig.map((link) => link.href.substring(1));
       let currentSection = "home";
 
       for (const section of sections) {
@@ -49,10 +58,10 @@ export default function Navbar() {
   const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
     setMobileMenuOpen(false);
-    
+
     const targetId = href.substring(1);
     const element = document.getElementById(targetId);
-    
+
     if (element) {
       const lenis = (window as any).lenis;
       if (lenis) {
@@ -71,7 +80,7 @@ export default function Navbar() {
 
         window.scrollTo({
           top: offsetPosition,
-          behavior: "smooth"
+          behavior: "smooth",
         });
       }
     }
@@ -81,31 +90,49 @@ export default function Navbar() {
     <>
       <header
         className={`fixed left-0 right-0 z-50 transition-all duration-500 ease-out ${
-          scrolled
-            ? "top-4 px-4 sm:px-6 md:px-8"
-            : "top-0 px-0"
+          scrolled ? "top-4 px-4 sm:px-6 md:px-8" : "top-0 px-0"
         }`}
       >
         <div
           className={`mx-auto max-w-7xl transition-all duration-500 ease-out ${
             scrolled
-              ? "rounded-full bg-brand-black/60 border border-brand-red/10 backdrop-blur-md px-6 py-2.5 shadow-[0_10px_35px_rgba(0,15,8,0.7)] hover:border-brand-red/25 hover:shadow-[0_10px_40px_rgba(251,54,64,0.1)] md:py-3 max-w-4xl"
+              ? "rounded-full bg-brand-black/60 border border-brand-red/10 backdrop-blur-md px-6 py-2.5 shadow-[0_10px_35px_rgba(0,15,8,0.7)] hover:border-brand-red/25 hover:shadow-[0_10px_40px_rgba(251,54,64,0.1)] md:py-3 max-w-5xl"
               : "border-b border-white/5 bg-transparent px-6 py-5 md:px-12 md:py-6"
           }`}
         >
           <div className="flex items-center justify-between">
             <a
               href="#home"
+              id="navbar-logo"
               onClick={(e) => handleLinkClick(e, "#home")}
-              className="flex items-center gap-2 group cursor-pointer"
+              className="flex items-center gap-3.5 group cursor-pointer relative min-w-0"
             >
-              <span className="text-[14px] font-bold uppercase tracking-[0.35em] text-white transition-all group-hover:tracking-[0.38em] group-hover:text-brand-red select-none">
-                Launch<span className="text-white/60 group-hover:text-white">Layer</span>
+              {/* Premium Iconic Logo Mark (Futuristic Cyber-Shield/Emitter) */}
+              <div className="relative w-5 h-5 flex items-center justify-center shrink-0 transition-transform duration-500 ease-out group-hover:rotate-[12deg] group-hover:scale-[1.06]">
+                {/* Outer pulsing ring */}
+                <div className="absolute inset-0 border border-brand-red/40 rounded-sm rotate-45 scale-100 group-hover:scale-110 group-hover:border-brand-red group-hover:shadow-[0_0_10px_#FB3640] transition-all duration-500 ease-out"></div>
+                {/* Inner core diamond */}
+                <div className="absolute w-2 h-2 bg-white rounded-xs rotate-45 group-hover:bg-brand-red group-hover:rotate-135 transition-all duration-700 ease-out"></div>
+                {/* Subtle laser scanner light line */}
+                <div className="absolute top-0 bottom-0 left-1/2 w-[1px] bg-brand-red/80 group-hover:bg-white group-hover:shadow-[0_0_8px_#fff] scale-y-0 group-hover:scale-y-125 transition-transform duration-500 ease-out"></div>
+                {/* Cinematic halo */}
+                <div className="absolute -inset-2 rounded-md bg-brand-red/10 blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
+              </div>
+
+              {/* Logo Text Styling with gradient accent and tracking hover */}
+              <span className="relative text-[12px] font-black uppercase tracking-[0.32em] sm:tracking-[0.4em] text-white select-none transition-all duration-500 group-hover:tracking-[0.38em] sm:group-hover:tracking-[0.45em] text-balance break-words leading-none">
+                <span className="relative">
+                  Launch
+                  <span className="text-brand-red group-hover:text-white group-hover:drop-shadow-[0_0_14px_rgba(251,54,64,0.9)] transition-all duration-500">
+                    Layer
+                  </span>
+                  <span className="absolute left-0 -bottom-1.5 h-px w-full bg-gradient-to-r from-transparent via-brand-red/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+                </span>
               </span>
             </a>
 
             {/* Desktop Navigation Links */}
-            <nav className="hidden md:flex items-center gap-1">
+            <nav className="hidden lg:flex items-center gap-1">
               {navLinks.map((link) => {
                 const isActive = activeSection === link.href.substring(1);
                 return (
@@ -129,6 +156,11 @@ export default function Navbar() {
               })}
             </nav>
 
+            {/* Premium Dropdown Language Switcher (Desktop) */}
+            <div className="hidden md:block">
+              <LanguageSwitcher />
+            </div>
+
             {/* Premium CTA Button */}
             <div className="hidden md:block">
               <a
@@ -136,7 +168,7 @@ export default function Navbar() {
                 onClick={(e) => handleLinkClick(e, "#contact")}
                 className="relative overflow-hidden group inline-flex items-center gap-1.5 px-4.5 py-2 border border-brand-red/40 rounded-full text-[10px] font-semibold uppercase tracking-widest text-white transition-all duration-300 hover:border-brand-red hover:bg-brand-red/5 bg-brand-red/5"
               >
-                <span className="relative z-10">Start Launch</span>
+                <span className="relative z-10">{t("cta")}</span>
                 <ArrowUpRight className="w-3.5 h-3.5 relative z-10 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                 {/* Button inner glow overlay */}
                 <div className="absolute inset-0 bg-brand-red/20 opacity-0 group-hover:opacity-100 blur-sm transition-opacity"></div>
@@ -150,11 +182,7 @@ export default function Navbar() {
                 className="text-white/70 hover:text-white p-1 transition-colors"
                 aria-label="Toggle menu"
               >
-                {mobileMenuOpen ? (
-                  <X className="w-5 h-5" />
-                ) : (
-                  <Menu className="w-5 h-5" />
-                )}
+                {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
               </button>
             </div>
           </div>
@@ -176,8 +204,10 @@ export default function Navbar() {
                   key={link.name}
                   href={link.href}
                   onClick={(e) => handleLinkClick(e, link.href)}
-                  className={`text-2xl font-bold uppercase tracking-widest transition-all duration-300 ${
-                    isActive ? "text-brand-red pl-4 border-l-2 border-brand-red" : "text-white/50 hover:text-white"
+                  className={`text-[clamp(1.35rem,6vw,2rem)] font-bold uppercase tracking-[0.22em] sm:tracking-widest leading-tight text-balance break-words transition-all duration-300 ${
+                    isActive
+                      ? "text-brand-red pl-4 border-l-2 border-brand-red"
+                      : "text-white/50 hover:text-white"
                   }`}
                   style={{
                     transitionDelay: mobileMenuOpen ? `${idx * 75}ms` : "0ms",
@@ -190,21 +220,26 @@ export default function Navbar() {
               );
             })}
           </div>
-          
+
           <div
-            className="mt-16 border-t border-white/10 pt-8"
+            className="mt-16 border-t border-white/10 pt-8 flex flex-col gap-6"
             style={{
               transitionDelay: mobileMenuOpen ? "450ms" : "0ms",
               transform: mobileMenuOpen ? "translateY(0)" : "translateY(30px)",
               opacity: mobileMenuOpen ? 1 : 0,
             }}
           >
+            {/* Mobile Premium Language Switcher */}
+            <div className="flex justify-center">
+              <LanguageSwitcher />
+            </div>
+
             <a
               href="#contact"
               onClick={(e) => handleLinkClick(e, "#contact")}
               className="w-full flex items-center justify-between px-6 py-4 border border-brand-red/50 bg-brand-red/5 text-xs uppercase tracking-widest font-bold rounded-lg text-white"
             >
-              <span>Initialize Project</span>
+              <span>{t("mobileCta")}</span>
               <ArrowUpRight className="w-4 h-4" />
             </a>
           </div>
